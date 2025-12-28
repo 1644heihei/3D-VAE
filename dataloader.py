@@ -9,16 +9,19 @@ import nibabel as ni
 import os, shutil
 import time
 import random
-import pandas as pd 
+import pandas as pd
+
 
 def split_train_test(dir, ratio_test=0.15):
-    if not os.path.exists(os.path.join(dir, "train")): os.mkdir(os.path.join(dir, "train"))
-    if not os.path.exists(os.path.join(dir, "test")): os.mkdir(os.path.join(dir, "test"))
-    
+    if not os.path.exists(os.path.join(dir, "train")):
+        os.mkdir(os.path.join(dir, "train"))
+    if not os.path.exists(os.path.join(dir, "test")):
+        os.mkdir(os.path.join(dir, "test"))
+
     images_list = [i for i in os.listdir(dir) if i.endswith(".nii")]
 
     random.shuffle(images_list)
-    threshold = int(len(images_list)*ratio_test)
+    threshold = int(len(images_list) * ratio_test)
     train_list = images_list[:-threshold]
     test_list = images_list[-threshold:]
 
@@ -27,8 +30,11 @@ def split_train_test(dir, ratio_test=0.15):
     for i in test_list:
         shutil.move(os.path.join(dir, i), os.path.join(dir, "test", i))
 
+
 def save_data_to_csv(dir, z):
     pd.DataFrame(z).to_csv(dir, header=None, index=False)
+
+
 """
 def load_mri_images(path, batch_size):
     filenames = [i for i in os.listdir(path) if i.endswith(".raw")]
@@ -58,6 +64,8 @@ def load_mri_images(path, batch_size):
             yield batch_image, batch_stats  # バッチデータと統計情報を返す
 
 """
+
+
 def load_mri_images(path, batch_size):
     filenames = [i for i in os.listdir(path) if i.endswith(".raw")]
     if not filenames:
@@ -72,8 +80,13 @@ def load_mri_images(path, batch_size):
             if i >= len(filenames):
                 break
             filepath = os.path.join(path, filenames[i])
-            image = np.fromfile(filepath, dtype=np.int16).reshape((80, 96, 80))  # reshapeは必要に応じて調整
-            original_min, original_max = image.min(), image.max()  # 最小値・最大値を取得
+            image = np.fromfile(filepath, dtype=np.int16).reshape(
+                (80, 96, 80)
+            )  # reshapeは必要に応じて調整
+            original_min, original_max = (
+                image.min(),
+                image.max(),
+            )  # 最小値・最大値を取得
             image = (image - original_min) / (original_max - original_min)  # 正規化
             image = torch.tensor(image, dtype=torch.float32).unsqueeze(0).unsqueeze(0)
             batch_image.append(image)
@@ -84,11 +97,11 @@ def load_mri_images(path, batch_size):
             yield batch_image, batch_min_max  # バッチデータと min/max を返す
 
 
-#################### TEST #################   
+#################### TEST #################
 # start = time.time()
 # for i in load_mri_images("./data", 2):
 #     print(time.time()-start)
 #     start = time.time()
 #     print(i.shape)
 
-#split_train_test("/home/ubuntu/Desktop/DuyPhuong/VAE/data")
+# split_train_test("/home/ubuntu/Desktop/DuyPhuong/VAE/data")

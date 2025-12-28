@@ -2,12 +2,15 @@ import torch
 import numpy as np
 import os, shutil
 import random
-import pandas as pd 
+import pandas as pd
+
 
 def split_train_test(dir, ratio_test=0.15):
-    if not os.path.exists(os.path.join(dir, "train")): os.mkdir(os.path.join(dir, "train"))
-    if not os.path.exists(os.path.join(dir, "test")): os.mkdir(os.path.join(dir, "test"))
-    
+    if not os.path.exists(os.path.join(dir, "train")):
+        os.mkdir(os.path.join(dir, "train"))
+    if not os.path.exists(os.path.join(dir, "test")):
+        os.mkdir(os.path.join(dir, "test"))
+
     images_list = [i for i in os.listdir(dir) if i.endswith(".raw")]
 
     random.shuffle(images_list)
@@ -20,8 +23,10 @@ def split_train_test(dir, ratio_test=0.15):
     for i in test_list:
         shutil.move(os.path.join(dir, i), os.path.join(dir, "test", i))
 
+
 def save_data_to_csv(dir, z):
     pd.DataFrame(z).to_csv(dir, header=None, index=False)
+
 
 def load_mri_images(path, batch_size):
     filenames = [i for i in os.listdir(path) if i.endswith(".raw")]
@@ -34,7 +39,9 @@ def load_mri_images(path, batch_size):
                 break
             # Load raw file
             filepath = os.path.join(path, filenames[i])
-            image = np.fromfile(filepath, dtype=np.int16).reshape((80, 96, 80))  # Adjust shape if necessary
+            image = np.fromfile(filepath, dtype=np.int16).reshape(
+                (80, 96, 80)
+            )  # Adjust shape if necessary
             # Normalize data
             image = (image - image.min()) / (image.max() - image.min())
             image = torch.tensor(image, dtype=torch.float32)
