@@ -11,7 +11,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
 from tqdm import tqdm
-import model3  # Using the consistent model3.py
+import model_vae_3d as model_vae  # Renamed from model3
 import dataloader_pair  # The new paired dataloader
 import loss
 
@@ -37,7 +37,7 @@ print(f"Device: {device}")
 def train():
     # Model
     # latent_dim reduced to 1024 to fit in 24GB VRAM
-    vae_model = model3.VAE(latent_dim=latent_dim)
+    vae_model = model_vae.VAE(latent_dim=latent_dim)
     vae_model.to(device)
 
     # Optimizer
@@ -49,9 +49,8 @@ def train():
 
     # Dataset & Dataloader
     # Assuming dataloader_pair has PairedMRIDataset
-    dataset = dataloader_pair.PairedMRIDataset(root_dir=train_dir)
+    dataset = dataloader_pair.PairedMRIDataset(root_dir="dataset", mode="train")
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=2)
-
     print(f"Number of training pairs: {len(dataset)}")
 
     step = 0

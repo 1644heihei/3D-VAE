@@ -4,7 +4,7 @@ from torch.utils.data import DataLoader
 import numpy as np
 import os
 import glob
-import model3
+import model_vae_3d as model_vae
 import dataloader_pair
 from tqdm import tqdm
 
@@ -40,14 +40,19 @@ def calculate_psnr(img1, img2, data_range=1.0):
 
 def evaluate():
     # Load Model
-    model = model3.VAE(latent_dim=latent_dim)
+    model = model_vae.VAE(latent_dim=latent_dim)
     model.load_state_dict(torch.load(checkpoint_path, map_location=device))
     model.to(device)
     model.eval()
 
     # Load Data
-    # Note: Ideally, this should be a 'test' set, but we use 'train' for demonstration if test set is not separated
-    dataset = dataloader_pair.PairedMRIDataset(root_dir="dataset/train")
+    # Use 'test' set for evaluation
+    try:
+        dataset = dataloader_pair.PairedMRIDataset(root_dir="dataset", mode="test")
+    except FileNotFoundError:
+        print("Test dataset not found. Please run prepare_data.py first.")
+        return
+
     dataloader = DataLoader(
         dataset, batch_size=batch_size, shuffle=False, num_workers=2
     )

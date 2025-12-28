@@ -5,15 +5,21 @@ from torch.utils.data import Dataset, DataLoader
 
 
 class PairedMRIDataset(Dataset):
-    def __init__(self, root_dir, mode="train", transform=None):
+    def __init__(self, root_dir="dataset", mode="train", transform=None):
         """
         Args:
-            root_dir (string): データセットのルートディレクトリ (例: "dataset/train")
-            mode (string): 'train' または 'test' (フォルダ構成に依存)
+            root_dir (string): データセットのルートディレクトリ (例: "dataset")
+            mode (string): 'train', 'test' のいずれか
             transform (callable, optional): サンプルに適用される変換
         """
-        self.lr_dir = os.path.join(root_dir, "LR")
-        self.hr_dir = os.path.join(root_dir, "HR")
+        self.lr_dir = os.path.join(root_dir, mode, "LR")
+        self.hr_dir = os.path.join(root_dir, mode, "HR")
+
+        if not os.path.exists(self.lr_dir):
+            raise FileNotFoundError(
+                f"Directory not found: {self.lr_dir}. Please run prepare_data.py first."
+            )
+
         self.filenames = [f for f in os.listdir(self.lr_dir) if f.endswith(".raw")]
         self.transform = transform
 
@@ -53,8 +59,10 @@ class PairedMRIDataset(Dataset):
         return lr_image, hr_image
 
 
-def get_dataloader(root_dir, batch_size=4, shuffle=True, num_workers=2):
-    dataset = PairedMRIDataset(root_dir)
+def get_dataloader(
+    root_dir="dataset", mode="train", batch_size=4, shuffle=True, num_workers=2
+):
+    dataset = PairedMRIDataset(root_dir, mode=mode)
     dataloader = DataLoader(
         dataset, batch_size=batch_size, shuffle=shuffle, num_workers=num_workers
     )
@@ -63,14 +71,15 @@ def get_dataloader(root_dir, batch_size=4, shuffle=True, num_workers=2):
 
 if __name__ == "__main__":
     # テスト用コード
-    # dataset/train フォルダが存在し、中に LR/HR フォルダとデータがあることを前提とします
-    root = "dataset/train"
+    root = "dataset"
     if os.path.exists(root):
-        loader = get_dataloader(root, batch_size=2)
-        for lr, hr in loader:
-            print(f"LR shape: {lr.shape}, HR shape: {hr.shape}")
-            print(f"LR min/max: {lr.min()}/{lr.max()}")
-            print(f"HR min/max: {hr.min()}/{hr.max()}")
-            break
+        try:
+            loader = get_dataloader(root, mode="train", batch_size=2)
+            print("Checking Train Loader...")
+            for lr, hr in loader:
+                print(f"LR shape: {lr.shape}, HR shape: {hr.shape}")
+                break
+        except Exception as e:
+            print(e)
     else:
         print(f"Directory {root} not found. Please run prepare_data.py first.")

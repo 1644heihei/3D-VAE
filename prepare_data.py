@@ -73,10 +73,7 @@ import os
 import numpy as np
 from concurrent.futures import ThreadPoolExecutor
 
-output_dir_lr = "dataset/train/LR"
-output_dir_hr = "dataset/train/HR"
-os.makedirs(output_dir_lr, exist_ok=True)
-os.makedirs(output_dir_hr, exist_ok=True)
+# Global output directories removed. Defined inside cut() based on mode.
 
 
 # 並列処理で実行する関数
@@ -90,7 +87,13 @@ def process_cut(i, j, k, slidex, slidey, slidez, data, cutx, cuty, cutz):
     ]
 
 
-def cut(y, DimSize, img17h, img17l, img18h, img18l):
+def cut(y, DimSize, img17h, img17l, img18h, img18l, mode="train"):
+    # Set output directories based on mode
+    output_dir_lr = f"dataset/{mode}/LR"
+    output_dir_hr = f"dataset/{mode}/HR"
+    os.makedirs(output_dir_lr, exist_ok=True)
+    os.makedirs(output_dir_hr, exist_ok=True)
+
     # パラメータ設定
     numa = 80
     numa2 = 96
@@ -183,9 +186,12 @@ def cut(y, DimSize, img17h, img17l, img18h, img18l):
 
 # データの処理
 y = 0
-y = cut(y, [1800, 1752, 300], img17h, img17l, img18h, img18l)
-y = cut(y, [1740, 1320, 300], img27h, img27l, img28h, img28l)
-y = cut(y, [1740, 1420, 300], img37h, img37l, img38h, img38l)
-y = cut(y, [1800, 1300, 300], img47h, img47l, img48h, img48l)
-y = cut(y, [1800, 1220, 300], img57h, img57l, img58h, img58l)
-y = cut(y, [1800, 1832, 300], img67h, img67l, img68h, img68l)
+# Train: 5 sets
+y = cut(y, [1800, 1752, 300], img17h, img17l, img18h, img18l, mode="train")
+y = cut(y, [1740, 1320, 300], img27h, img27l, img28h, img28l, mode="train")
+y = cut(y, [1740, 1420, 300], img37h, img37l, img38h, img38l, mode="train")
+y = cut(y, [1800, 1300, 300], img47h, img47l, img48h, img48l, mode="train")
+y = cut(y, [1800, 1220, 300], img57h, img57l, img58h, img58l, mode="train")
+
+# Test: 1 set
+y = cut(y, [1800, 1832, 300], img67h, img67l, img68h, img68l, mode="test")
