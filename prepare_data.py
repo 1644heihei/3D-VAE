@@ -34,40 +34,40 @@ from sklearn.model_selection import train_test_split
 import cv2
 
 DimSize1 = [1800, 1752, 300]
-img17h = "C:/Users/FUJII/Desktop/20240423/IQL1/study(20240422180726_sample)_scan(20240422182550_still)/scan(20240422182550_still)_recon(20240422190026.618_1533.0_0.100_-15.0_15.0).binary/volume_756.raw"
-img17l = "C:/Users/FUJII/Desktop/20240423/IQL3/study(20240422180726_sample)_scan(20240422181104_still)/scan(20240422181104_still)_recon(20240422183101.003_decimation5_1533.5_0.100_-15.0_15.0).binary/volume_756.raw"
-img18h = "C:/Users/FUJII/Desktop/20240423/IQL1/study(20240422180726_sample)_scan(20240422182550_still)/scan(20240422182550_still)_recon(20240422190026.618_1533.0_0.100_-15.0_15.0).binary/volume_797.raw"
-img18l = "C:/Users/FUJII/Desktop/20240423/IQL3/study(20240422180726_sample)_scan(20240422181104_still)/scan(20240422181104_still)_recon(20240422183101.003_decimation5_1533.5_0.100_-15.0_15.0).binary/volume_797.raw"
+img17h = "I:/データ/20240423/IQL1/study(20240422180726_sample)_scan(20240422182550_still)/scan(20240422182550_still)_recon(20240422190026.618_1533.0_0.100_-15.0_15.0).binary/volume_756.raw"
+img17l = "I:/データ/20240423/IQL3/study(20240422180726_sample)_scan(20240422181104_still)/scan(20240422181104_still)_recon(20240422183101.003_decimation5_1533.5_0.100_-15.0_15.0).binary/volume_756.raw"
+img18h = "I:/データ/20240423/IQL1/study(20240422180726_sample)_scan(20240422182550_still)/scan(20240422182550_still)_recon(20240422190026.618_1533.0_0.100_-15.0_15.0).binary/volume_797.raw"
+img18l = "I:/データ/20240423/IQL3/study(20240422180726_sample)_scan(20240422181104_still)/scan(20240422181104_still)_recon(20240422183101.003_decimation5_1533.5_0.100_-15.0_15.0).binary/volume_797.raw"
 
 DimSize2 = [1740, 1320, 300]
-img27h = "C:/Users/FUJII/Desktop/20240423/IQL1/study(20240423130527_Palm001)_scan(20240423131843_still)/scan(20240423131843_still)_recon(20240423151216.758_1531.9_0.100_-15.0_15.0).binary/volume_756.raw"
-img27l = "C:/Users/FUJII/Desktop/20240423/IQL3/study(20240423130527_Palm001)_scan(20240423130803_still)/scan(20240423130803_still)_recon(20240423145738.639_decimation5_1532.4_0.100_-15.0_15.0).binary/volume_756.raw"
-img28h = "C:/Users/FUJII/Desktop/20240423/IQL1/study(20240423130527_Palm001)_scan(20240423131843_still)/scan(20240423131843_still)_recon(20240423151216.758_1531.9_0.100_-15.0_15.0).binary/volume_797.raw"
-img28l = "C:/Users/FUJII/Desktop/20240423/IQL3/study(20240423130527_Palm001)_scan(20240423130803_still)/scan(20240423130803_still)_recon(20240423145738.639_decimation5_1532.4_0.100_-15.0_15.0).binary/volume_797.raw"
+img27h = "I:/データ/20240423/IQL1/study(20240423130527_Palm001)_scan(20240423131843_still)/scan(20240423131843_still)_recon(20240423151216.758_1531.9_0.100_-15.0_15.0).binary/volume_756.raw"
+img27l = "I:/データ/20240423/IQL3/study(20240423130527_Palm001)_scan(20240423130803_still)/scan(20240423130803_still)_recon(20240423145738.639_decimation5_1532.4_0.100_-15.0_15.0).binary/volume_756.raw"
+img28h = "I:/データ/20240423/IQL1/study(20240423130527_Palm001)_scan(20240423131843_still)/scan(20240423131843_still)_recon(20240423151216.758_1531.9_0.100_-15.0_15.0).binary/volume_797.raw"
+img28l = "I:/データ/20240423/IQL3/study(20240423130527_Palm001)_scan(20240423130803_still)/scan(20240423130803_still)_recon(20240423145738.639_decimation5_1532.4_0.100_-15.0_15.0).binary/volume_797.raw"
 
 DimSize3 = [1740, 1420, 300]
-img37h = "C:/Users/FUJII/Desktop/20240423/IQL1/study(20240423130527_Palm001)_scan(20240423133408_still)/scan(20240423133408_still)_recon(20240423151224.592_1532.3_0.100_-15.0_15.0).binary/volume_756.raw"
-img37l = "C:/Users/FUJII/Desktop/20240423/IQL3/study(20240423130527_Palm001)_scan(20240423132259_still)/scan(20240423132259_still)_recon(20240423145827.396_decimation5_1532.7_0.100_-15.0_15.0).binary/volume_756.raw"
-img38h = "C:/Users/FUJII/Desktop/20240423/IQL1/study(20240423130527_Palm001)_scan(20240423133408_still)/scan(20240423133408_still)_recon(20240423151224.592_1532.3_0.100_-15.0_15.0).binary/volume_797.raw"
-img38l = "C:/Users/FUJII/Desktop/20240423/IQL3/study(20240423130527_Palm001)_scan(20240423132259_still)/scan(20240423132259_still)_recon(20240423145827.396_decimation5_1532.7_0.100_-15.0_15.0).binary/volume_797.raw"
+img37h = "I:/データ/20240423/IQL1/study(20240423130527_Palm001)_scan(20240423133408_still)/scan(20240423133408_still)_recon(20240423151224.592_1532.3_0.100_-15.0_15.0).binary/volume_756.raw"
+img37l = "I:/データ/20240423/IQL3/study(20240423130527_Palm001)_scan(20240423132259_still)/scan(20240423132259_still)_recon(20240423145827.396_decimation5_1532.7_0.100_-15.0_15.0).binary/volume_756.raw"
+img38h = "I:/データ/20240423/IQL1/study(20240423130527_Palm001)_scan(20240423133408_still)/scan(20240423133408_still)_recon(20240423151224.592_1532.3_0.100_-15.0_15.0).binary/volume_797.raw"
+img38l = "I:/データ/20240423/IQL3/study(20240423130527_Palm001)_scan(20240423132259_still)/scan(20240423132259_still)_recon(20240423145827.396_decimation5_1532.7_0.100_-15.0_15.0).binary/volume_797.raw"
 
 DimSize4 = [1800, 1300, 300]
-img47h = "C:/Users/FUJII/Desktop/20240423/IQL1/study(20240423134040_Palm002)_scan(20240423135542_still)/scan(20240423135542_still)_recon(20240423151233.639_1533.5_0.100_-15.0_15.0).binary/volume_756.raw"
-img47l = "C:/Users/FUJII/Desktop/20240423/IQL3/study(20240423134040_Palm002)_scan(20240423134452_still)/scan(20240423134452_still)_recon(20240423145903.498_decimation5_1533.3_0.100_-15.0_15.0).binary/volume_756.raw"
-img48h = "C:/Users/FUJII/Desktop/20240423/IQL1/study(20240423134040_Palm002)_scan(20240423135542_still)/scan(20240423135542_still)_recon(20240423151233.639_1533.5_0.100_-15.0_15.0).binary/volume_797.raw"
-img48l = "C:/Users/FUJII/Desktop/20240423/IQL3/study(20240423134040_Palm002)_scan(20240423134452_still)/scan(20240423134452_still)_recon(20240423145903.498_decimation5_1533.3_0.100_-15.0_15.0).binary/volume_797.raw"
+img47h = "I:/データ/20240423/IQL1/study(20240423134040_Palm002)_scan(20240423135542_still)/scan(20240423135542_still)_recon(20240423151233.639_1533.5_0.100_-15.0_15.0).binary/volume_756.raw"
+img47l = "I:/データ/20240423/IQL3/study(20240423134040_Palm002)_scan(20240423134452_still)/scan(20240423134452_still)_recon(20240423145903.498_decimation5_1533.3_0.100_-15.0_15.0).binary/volume_756.raw"
+img48h = "I:/データ/20240423/IQL1/study(20240423134040_Palm002)_scan(20240423135542_still)/scan(20240423135542_still)_recon(20240423151233.639_1533.5_0.100_-15.0_15.0).binary/volume_797.raw"
+img48l = "I:/データ/20240423/IQL3/study(20240423134040_Palm002)_scan(20240423134452_still)/scan(20240423134452_still)_recon(20240423145903.498_decimation5_1533.3_0.100_-15.0_15.0).binary/volume_797.raw"
 
 DimSize5 = [1800, 1220, 300]
-img57h = "C:/Users/FUJII/Desktop/20240423/IQL1/study(20240423134040_Palm002)_scan(20240423141005_still)/scan(20240423141005_still)_recon(20240423151238.760_1533.5_0.100_-15.0_15.0).binary/volume_756.raw"
-img57l = "C:/Users/FUJII/Desktop/20240423/IQL3/study(20240423134040_Palm002)_scan(20240423135956_still)/scan(20240423135956_still)_recon(20240423151024.728_decimation5_1532.8_0.100_-15.0_15.0).binary/volume_756.raw"
-img58h = "C:/Users/FUJII/Desktop/20240423/IQL1/study(20240423134040_Palm002)_scan(20240423141005_still)/scan(20240423141005_still)_recon(20240423151238.760_1533.5_0.100_-15.0_15.0).binary/volume_797.raw"
-img58l = "C:/Users/FUJII/Desktop/20240423/IQL3/study(20240423134040_Palm002)_scan(20240423135956_still)/scan(20240423135956_still)_recon(20240423151024.728_decimation5_1532.8_0.100_-15.0_15.0).binary/volume_797.raw"
+img57h = "I:/データ/20240423/IQL1/study(20240423134040_Palm002)_scan(20240423141005_still)/scan(20240423141005_still)_recon(20240423151238.760_1533.5_0.100_-15.0_15.0).binary/volume_756.raw"
+img57l = "I:/データ/20240423/IQL3/study(20240423134040_Palm002)_scan(20240423135956_still)/scan(20240423135956_still)_recon(20240423151024.728_decimation5_1532.8_0.100_-15.0_15.0).binary/volume_756.raw"
+img58h = "I:/データ/20240423/IQL1/study(20240423134040_Palm002)_scan(20240423141005_still)/scan(20240423141005_still)_recon(20240423151238.760_1533.5_0.100_-15.0_15.0).binary/volume_797.raw"
+img58l = "I:/データ/20240423/IQL3/study(20240423134040_Palm002)_scan(20240423135956_still)/scan(20240423135956_still)_recon(20240423151024.728_decimation5_1532.8_0.100_-15.0_15.0).binary/volume_797.raw"
 
 DimSize6 = [1800, 1832, 300]
-img67h = "C:/Users/FUJII/Desktop/20240423/IQL1/study(20240423141327_Palm003)_scan(20240423142956_still)/scan(20240423142956_still)_recon(20240423151242.879_1533.9_0.100_-15.0_15.0).binary/volume_756.raw"
-img67l = "C:/Users/FUJII/Desktop/20240423/IQL3/study(20240423141327_Palm003)_scan(20240423141503_still)/scan(20240423141503_still)_recon(20240423151055.461_decimation5_1533.1_0.100_-15.0_15.0).binary/volume_756.raw"
-img68h = "C:/Users/FUJII/Desktop/20240423/IQL1/study(20240423141327_Palm003)_scan(20240423142956_still)/scan(20240423142956_still)_recon(20240423151242.879_1533.9_0.100_-15.0_15.0).binary/volume_797.raw"
-img68l = "C:/Users/FUJII/Desktop/20240423/IQL3/study(20240423141327_Palm003)_scan(20240423141503_still)/scan(20240423141503_still)_recon(20240423151055.461_decimation5_1533.1_0.100_-15.0_15.0).binary/volume_797.raw"
+img67h = "I:/データ/20240423/IQL1/study(20240423141327_Palm003)_scan(20240423142956_still)/scan(20240423142956_still)_recon(20240423151242.879_1533.9_0.100_-15.0_15.0).binary/volume_756.raw"
+img67l = "I:/データ/20240423/IQL3/study(20240423141327_Palm003)_scan(20240423141503_still)/scan(20240423141503_still)_recon(20240423151055.461_decimation5_1533.1_0.100_-15.0_15.0).binary/volume_756.raw"
+img68h = "I:/データ/20240423/IQL1/study(20240423141327_Palm003)_scan(20240423142956_still)/scan(20240423142956_still)_recon(20240423151242.879_1533.9_0.100_-15.0_15.0).binary/volume_797.raw"
+img68l = "I:/データ/20240423/IQL3/study(20240423141327_Palm003)_scan(20240423141503_still)/scan(20240423141503_still)_recon(20240423151055.461_decimation5_1533.1_0.100_-15.0_15.0).binary/volume_797.raw"
 
 import os
 import numpy as np
