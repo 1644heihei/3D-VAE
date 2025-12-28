@@ -1,0 +1,10 @@
+output_raw_data2/
+checkpoint/
+saved_raw_data/
+save_image7/
+dataset/
+asset/
+__pycache__/
+*.pt
+*.raw
+*.nii
