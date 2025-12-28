@@ -6,19 +6,20 @@ Email: phuongdd.1997@gmail.com (or duyphuongcri@gmail.com)
 import nibabel as ni
 import numpy as np
 import os, glob
-import torch 
+import torch
 import csv
 from tqdm import tqdm
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
 
 import model3
 import loss
 import dataloader
 import visualize
+
 ##---------Settings--------------------------
 batch_size = 32
 ##############
-path_data = "/home/ubuntu/Desktop/DuyPhuong/VAE/data/test"
+path_data = "./output_raw_data2"
 path_model = "./checkpoint/vae_t1/model_vae_epoch_43.pt"
 ####################
 verbose = True
@@ -30,25 +31,29 @@ torch.manual_seed(10)
 criterion_rec = loss.L1Loss()
 criterion_dis = loss.KLDivergence()
 
-device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 print(" GPU is activated" if device else " CPU is activated")
-no_images = len(glob.glob(path_data + "/*.nii"))
+no_images = len(glob.glob(path_data + "/*.raw"))
 print("Number of MRI images: ", no_images)
-if __name__=="__main__":
+if __name__ == "__main__":
     vae_model = torch.load(path_model)
     vae_model.to(device)
-    #log(vae_model)
+    # log(vae_model)
     loss_rec_batch, loss_KL_batch, total_loss_batch = 0, 0, 0
     loss_rec, loss_KL, total_loss = 0, 0, 0
-        
+
     # interfere phrase
     vae_model.eval()
     z = []
     with torch.no_grad():
-        for batch_images, batch_min_max in dataloader.load_mri_images(path_data, batch_size):
+        for batch_images, batch_min_max in dataloader.load_mri_images(
+            path_data, batch_size
+        ):
             batch_images = batch_images.to(device)
             y, z_mean, z_log_sigma = vae_model(batch_images)
-            z.append((z_mean + z_log_sigma.exp()*vae_model.epsilon).cpu().detach().numpy())
+            z.append(
+                (z_mean + z_log_sigma.exp() * vae_model.epsilon).cpu().detach().numpy()
+            )
 
             # Measure loss
             loss_rec_batch = criterion_rec(batch_images, y)
@@ -60,17 +65,12 @@ if __name__=="__main__":
             total_loss += total_loss_batch.item() * batch_images.shape[0]
 
             # display
-            #visualize.display_image(batch_images, y)
-    print("Reconstruct Loss: {:.4f} | KL Loss: {:.4f}".format(loss_rec/ no_images, loss_KL/ no_images))
+            # visualize.display_image(batch_images, y)
+    print(
+        "Reconstruct Loss: {:.4f} | KL Loss: {:.4f}".format(
+            loss_rec / no_images, loss_KL / no_images
+        )
+    )
     z = np.concatenate(z, axis=0)
     dataloader.save_data_to_csv("./latent_space_z.csv", z)
     print(z.shape)
-
-
-
-
-
-
-           
-
-    
