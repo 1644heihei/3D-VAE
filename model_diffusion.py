@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import math
+from tqdm import tqdm
 
 
 class SinusoidalTimeEmbeddings(nn.Module):

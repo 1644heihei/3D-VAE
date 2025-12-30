@@ -1,0 +1,2 @@
+Baseline PSNR: 18.6403 dB
+Result PSNR:   20.1300 dB

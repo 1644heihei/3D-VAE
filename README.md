@@ -5,6 +5,17 @@
 
 ## 全体の流れ
 
+
+**さっさと動かしたいときは以下の順で実行してください**
+
+train_vae_pair.py
+evaluate_psnr.py
+prepare_latents.py
+train_diffusion.py
+predict_ldm.py
+
+
+
 このAIを作るには、以下の5つのステップを順番に実行する必要があります。
 
 1.  **データ準備**: 大きな画像を、AIが学習しやすいサイズに切り分ける。
